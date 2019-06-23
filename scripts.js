@@ -20,6 +20,8 @@ function main() {
     //get locations
     var carDistance = getDistance(arr[0], arr[1], "DRIVING");
     var busDistance = getDistance(arr[0], arr[1], "TRANSIT");
+
+    var emissionArray = emissionCal(carDistance, busDistance)
 }
 
 function parseUri(uri) {
@@ -43,8 +45,13 @@ function getDistance(origin, destination, travelMode) {
     return distance;
 }
 
+function emissionCal(distance1, distance2){
+    distance2 = distance2*0.6;
+    return [distance1, distance2];
+}
 
 
+// junk code
 
 
 calculateAndDisplayRoute(
