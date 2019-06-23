@@ -2,19 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
-    <title> Bearvan </title>
-    <!--<src></src>-->
+    <title id = "start"> Bearvan </title>
+    <script src="scripts.js"></script>
     <link rel="stylesheet" href="css/bearvan.css">
     <link href="https://fonts.googleapis.com/css?family=Viga|Open+Sans&display=swap" rel="stylesheet">
- 
 </head>
 
 <body>
+    
 
-    <div class="container">
-
+    <div class="container" id="startingPoint">
         <header>
             <div class="header">
                 <div class="header-left">&nbsp;&nbsp;BEARVAN</div>
@@ -32,17 +30,19 @@
                 <div class="from">FROM:</div>
                 <br>
                 <div class="yay">By taking the bus, you can save </div>
-                <div class="yay" id="jsop"></div>
+                <div class="yay">
+                        <div id="carEmissions"></div>
+                        <div id="busEmissions"></div>
+                </div>
                 <div class="yay">trees</div>
                 <br>
                 <div class="trees">Enter tree img and others</div>
             </div>
-            <div id="carEmissions"></div>
-            <div id="busEmissions"></div>
+            
+            <!--<script src="scripts.js" async defer onload="main()"></script>-->
         </main>
-
     </div>
-    <script src="scripts.js" async defer onload="main()"></script>
+    
 </body>
 
 </html>
