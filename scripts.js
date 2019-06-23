@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function (event) {
+    var printing = document.getElementById("carEmissions");
+    //var printed = document.getElementById("busEmissions");
+    printing.onload = showRes();
+    //printed.onload = showRes();
+});
+
 function main() {
     // set up
     var url;
@@ -55,4 +62,11 @@ function parseUri(uri) {
 function emissionCal(distance1, distance2) {
     distance2 = distance2 * 0.6;
     return [distance1, distance2];
+}
+
+function showRes() {
+    var printed = document.getElementById("carEmissions");
+    printed.innerText = main()[0];
+    //var printing = document.getElementById("busEmissions");
+    //printing.innerText = main()[1]
 }
