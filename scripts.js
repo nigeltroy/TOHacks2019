@@ -1,22 +1,29 @@
+document.addEventListener("DOMContentLoaded", function (event) {
+    var printing = document.getElementById("carEmissions");
+    //var printed = document.getElementById("busEmissions");
+    printing.onload = showRes();
+    //printed.onload = showRes();
+});
+
 function main() {
     // set up
-    var url;
+    var url = "";
     chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, function (tabs) {
         url = tabs[0].url;
     });
     var arr = parseUri(url);
 
     var key = "AIzaSyDtgSb2PZdgvvplLteWJmVRBKe2eXH-AgM";
-    var origin = arr[0];
-    var destination = arr[1];
+    var origin = "ICON + 330,+330 + Phillip + St, +Waterloo, +ON + N2L + 3W9, +Canada";
+    var destination = "Shoppers + Drug + Mart,+260 + Queen + St + W, +Toronto, +ON + M5V + 1Z8";
     var travelMode = "driving";
 
     // driving
     var requestUri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&mode=" + travelMode + "&key=" + key;
     request.open('GET', requestUri, true);
 
-    var carDistanceMeters;
-    var busDistanceMeters;
+    var carDistanceMeters = 10;
+    var busDistanceMeters = 11;
 
     request.onload = function () {
         // take the distance
@@ -55,4 +62,11 @@ function parseUri(uri) {
 function emissionCal(distance1, distance2) {
     distance2 = distance2 * 0.6;
     return [distance1, distance2];
+}
+
+function showRes() {
+    var printed = document.getElementById("carEmissions");
+    printed.innerText = main();
+    var printing = document.getElementById("busEmissions");
+    printing.innerText = main();
 }
