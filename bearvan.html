@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title> Bearvan </title>
+    <title id = "start"> Bearvan </title>
     <script src="scripts.js"></script>
     <link rel="stylesheet" href="css/bearvan.css">
     <link href="https://fonts.googleapis.com/css?family=Viga|Open+Sans&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body>
     
 
-    <div class="container">
+    <div class="container" id="startingPoint">
         <header>
             <div class="header">
                 <div class="header-left">&nbsp;&nbsp;BEARVAN</div>
@@ -31,17 +31,18 @@
                 <br>
                 <div class="yay">By taking the bus, you can save </div>
                 <div class="yay">
-                    chrome.tabs.executeScript(null, {file: "scripts.js"});
+                        <div id="carEmissions"></div>
+                        <div id="busEmissions"></div>
                 </div>
                 <div class="yay">trees</div>
                 <br>
                 <div class="trees">Enter tree img and others</div>
             </div>
-            <div id="carEmissions"></div>
-            <div id="busEmissions"></div>
+            
+            <!--<script src="scripts.js" async defer onload="main()"></script>-->
         </main>
     </div>
-    <script src="scripts.js" async defer onload="main()"></script>
+    
 </body>
 
 </html>
