@@ -4,7 +4,6 @@
   "description": "Place Project Description Here",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "ourextensionicon.png",
     "default_popup": "bearvan.html"
   },
   "permissions": [
