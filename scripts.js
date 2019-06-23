@@ -39,6 +39,10 @@ function main() {
     }
 
     request.send();
+
+    var emissionArray = emissionCal(carDistanceMeters, busDistanceMeters);
+
+    return emissionArray;
 }
 
 function parseUri(uri) {
@@ -48,35 +52,7 @@ function parseUri(uri) {
     return arr;
 }
 
-
-
-
-
-calculateAndDisplayRoute(
-    directionsDisplay, directionsService, markerArray, stepDisplay, map);
-// Listen to change events from the start and end lists.
-var onChangeHandler = function () {
-    calculateAndDisplayRoute(
-        directionsDisplay, directionsService, markerArray, stepDisplay, map);
-};
-
-function calculateAndDisplayRoute(directionsDisplay, directionsService,
-    markerArray, stepDisplay, map) {
-
-    // Retrieve the start and end locations and create a DirectionsRequest using
-    // WALKING directions.
-    directionsService.route({
-        origin: document.getElementById('start').value,
-        destination: document.getElementById('end').value,
-        travelMode: 'WALKING'
-    }, function (response, status) {
-        // Route the directions and pass the response to a function to create
-        // markers for each step.
-        if (status === 'OK') {
-            document.getElementById('warnings-panel').innerHTML =
-                '<b>' + response.routes[0].warnings + '</b>';
-        } else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
+function emissionCal(distance1, distance2) {
+    distance2 = distance2 * 0.6;
+    return [distance1, distance2];
 }
