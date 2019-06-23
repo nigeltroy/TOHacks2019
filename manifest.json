@@ -1,10 +1,11 @@
 {
     "manifest_version": 2,
     "name": "Bearvan",
-    "description": "Place Project Description Here",
+    "description": "TOHacks hack that tracks emission usage based on route and mode of transport. Created with love by Nancy Ngo, Joe Yu, Nigel Thomas Roy and Gloria Li.",
     "version": "1.0",
     "browser_action": {
-        "default_popup": "bearvan.html"
+        "default_popup": "bearvan.html",
+        "default_icon": "assets/images/BEAR.PNG"
     },
     "permissions": [
         "activeTab",
@@ -15,7 +16,7 @@
     "content_scripts": [
         {
             "matches": [
-                "*"
+                "<all_urls>"
             ],
             "js": [
                 "scripts.js"
