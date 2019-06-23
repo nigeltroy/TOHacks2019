@@ -42,13 +42,13 @@ function main() {
 
     var emissionArray = emissionCal(carDistanceMeters, busDistanceMeters);
 
-    return emissionArray;
+    document.getElementById('carEmissions').innerHTML = emissionArray[0];
+    document.getElementById('busEmissions').innerHTML = emissionArray[1];
 }
 
 function parseUri(uri) {
     var uriArr = uri.split("/");
     var arr = [uriArr[6], uriArr[7]];
-
     return arr;
 }
 
