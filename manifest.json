@@ -8,7 +8,9 @@
     "default_popup": "bearvan.html"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "geolocation",
+    "webRequest"
   ],
   "content_scripts": [
     {
