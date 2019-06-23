@@ -11,18 +11,18 @@ var destination = "Universal Studios Hollywood";
 function main() {
     var directionsService = new google.maps.DirectionsService;
 
-    //get locations
-    var carDistance = getDistance(origin, destination, "DRIVING");
-    var busDistance = getDistance(origin, origin, "TRANSIT");
-}
-
-function parseUri(uri, originOr) {
     var url;
-
     chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, function (tabs) {
         url = tabs[0].url;
     });
+    var arr = parseUri(url);
 
+    //get locations
+    var carDistance = getDistance(arr[0], arr[1], "DRIVING");
+    var busDistance = getDistance(arr[0], arr[1], "TRANSIT");
+}
+
+function parseUri(uri) {
     var uriArr = uri.split("/");
     var arr = [uriArr[6], uriArr[7]];
 
