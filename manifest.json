@@ -1,20 +1,28 @@
 {
-  "manifest_version": 2,
-  "name": "Bearvan",
-  "description": "Place Project Description Here",
-  "version": "1.0",
-  "browser_action": {
-    "default_popup": "bearvan.html"
-  },
-  "permissions": [
-    "activeTab",
-    "geolocation",
-    "webRequest"
-  ],
-  "content_scripts": [
-    {
-      "matches": [ "*://*.google.com/maps/dir/*" ],
-      "js": [ "scripts.js" ]
-    }
-  ]
+    "manifest_version": 2,
+    "name": "Bearvan",
+    "description": "Place Project Description Here",
+    "version": "1.0",
+    "browser_action": {
+        "default_popup": "bearvan.html"
+    },
+    "permissions": [
+        "activeTab",
+        "geolocation",
+        "webRequest",
+        "notifications"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*"
+            ],
+            "js": [
+                "scripts.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "scripts.js"
+    ]
 }
