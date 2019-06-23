@@ -1,12 +1,22 @@
-html {
-    background: #fff;
-}
-
 body {
-    margin: 0 auto;
-    width: 470px;
+    background:rgb(237, 255, 255);
+    width: 400px;
+    font-family: "Viga", sans-serif;
 }
 
 .header {
-    background:"#A9EDFF"
+    font-size: 35px;
+    height: 50px;
+    text-align: left;
+}
+
+.info {
+    margin-inline-start: 10px;
+    font-size: 15px;
+    line-height: 18px;
+}
+
+hr {
+    height: 0px;
+    border-bottom: 2px #000 solid;
 }
