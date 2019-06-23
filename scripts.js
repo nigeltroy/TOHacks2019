@@ -1,70 +1,58 @@
-// Create request
-// var directionsService = new google.maps.DirectionsService;
-
-var origin = "Disneyland";
-var destination = "Universal Studios Hollywood";
-
-//request.open('GET', 'https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyDtgSb2PZdgvvplLteWJmVRBKe2eXH-AgM', true)
-
-//request.onload = main();
-
 function main() {
-    // var directionsService = new google.maps.DirectionsService;
+    // set up
+    var url;
+    chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, function (tabs) {
+        url = tabs[0].url;
+    });
+    var arr = parseUri(url);
 
-    // var url;
-    // chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, function (tabs) {
-    //     url = tabs[0].url;
-    // });
-    // var arr = parseUri(url);
+    var key = "AIzaSyDtgSb2PZdgvvplLteWJmVRBKe2eXH-AgM";
+    var origin = arr[0];
+    var destination = arr[1];
+    var travelMode = "driving";
 
-    // //get locations
-    // var carDistance = getDistance(arr[0], arr[1], "DRIVING");
-    // var busDistance = getDistance(arr[0], arr[1], "TRANSIT");
+    // driving
+    var requestUri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&mode=" + travelMode + "&key=" + key;
+    request.open('GET', requestUri, true);
 
-    // var carDistance = emissionArray[0];
-    // var busDistance = emissionArray[1];
+    var carDistanceMeters;
+    var busDistanceMeters;
 
+    request.onload = function () {
+        // take the distance
+        var data = this.response;
+        carDistanceMeters = data.routes[0].legs[0].distance.value;
+    }
 
+    request.send();
 
+    // transit
+    travelMode = "transit";
 
-    // var emissionArray = emissionCal(carDistance, busDistance);
-    // var notification = webkitNotifications.createNotification(
-    //     'Hello!',  // notification title
-    //     'Lorem ipsum...'  // notification body text
-    // );
-    // notification.show();
+    var requestUri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&mode=" + travelMode + "&key=" + key;
+    request.open('GET', requestUri, true);
 
-    return 25;
+    request.onload = function () {
+        // take the distance
+        var data = this.response;
+        busDistanceMeters = data.routes[0].legs[0].distance.value;
+    }
+
+    request.send();
+
+    var emissionArray = emissionCal(carDistanceMeters, busDistanceMeters);
+
+    document.getElementById('carEmissions').innerHTML = emissionArray[0];
+    document.getElementById('busEmissions').innerHTML = emissionArray[1];
 }
 
 function parseUri(uri) {
     var uriArr = uri.split("/");
     var arr = [uriArr[6], uriArr[7]];
-
     return arr;
 }
 
-function getDistance(origin, destination, travelMode) {
-    directionsService.route({
-        origin: origin,
-        destination: destination,
-        travelMode: travelMode
-    });
-
-
-
-    var distance;
-
-    return distance;
-}
-
-function emissionCal(distance1, distance2){
-    distance2 = distance2*0.6;
+function emissionCal(distance1, distance2) {
+    distance2 = distance2 * 0.6;
     return [distance1, distance2];
 }
-
-main();
-
-// junk code
-
-
