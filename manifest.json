@@ -1,13 +1,17 @@
 { 
     "manifest_version": 2,
     "name": "Bearvan",
-    "description": "Place Project Description Here",
     "version": "1.0",
+
+    "description": "Place Project Description Here",
+
     "browser_action": {
-        "default_icon": "ourextensionicon.png",
         "default_popup": "bearvan.html"
     },
+
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "geolocation", 
+        "webRequest"
     ]
 }
