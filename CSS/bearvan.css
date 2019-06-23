@@ -2,21 +2,62 @@ body {
     background:#fff;
     width: 400px;
     font-family: "Viga", sans-serif;
+    overflow: hidden;
 }
 
 .header {
     font-size: 35px;
-    height: 50px;
-    text-align: left;
+    height: 55px;
+    text-align: center;
+}
+
+.header-left {
+    float: left;
+}
+
+.header-right {
+    float: right;
 }
 
 .info {
-    margin-inline-start: 10px;
-    font-size: 15px;
-    line-height: 18px;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 hr {
     height: 0px;
+    width: 300px;
+    align-content: center;
     border-bottom: 2px #000 solid;
+}
+
+.choosing {
+    text-align: center;
+}
+
+.hidden-metric {
+    visibility: hidden;
+    display: none;
+}
+
+.sub-display-block {
+    text-align: center;
+}
+
+.trees-saved {
+    display: inline-block;
+    margin: 0 auto;
+    width: 50px;
+    font-size: 24px;
+}
+
+.saving {
+    display: inline-block;
+    margin: 0 auto;
+    width: 50px;
+}
+
+.inspirational-message {
+    text-align: center;
+    font-size: 25px;
 }
