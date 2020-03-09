@@ -19,11 +19,11 @@
                 "<all_urls>"
             ],
             "js": [
-                "scripts.js"
+                "scripts/scripts.js"
             ]
         }
     ],
     "web_accessible_resources": [
-        "scripts.js"
+        "scripts/scripts.js"
     ]
 }
