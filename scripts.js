@@ -25,6 +25,22 @@ function convertUrlToLocations(url) {
     return locationArray;
 }
 
+// createRequestUri(origin, destination, travelMode) plugs in the given parameters and
+// creates a URI to use to send a GET request to the Google Maps API
+function createRequestUri(origin, destination, travelMode, apiKey) {
+    var requestUri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&mode=" + travelMode + "&key=" + apiKey;
+    return requestUri;
+}
+
+// parseRequestResponse(responseObject, emissionsModifier, emissionsElement) parses the response data and
+// sets the respective HTML element to the calculated value
+function parseRequestResponse(responseObject, emissionsModifier, emissionsElement) {
+    var data = JSON.parse(responseObject.response);
+    var distance = data.routes[0].legs[0].distance.value;
+    var emissions = distance * emissionsModifier;
+    document.getElementById(emissionsElement).setAttribute("name", emissions);
+}
+
 // Our main() function, where all the important stuff goes down
 function main() {
     // Set up our settings for the query we need to execute
@@ -45,53 +61,38 @@ function main() {
         // this would normally be part of a .env file that is part of our .gitignore
         var key = "AIzaSyDtgSb2PZdgvvplLteWJmVRBKe2eXH-AgM";
 
-        // Set our default travel mode
-        var travelMode = "driving";
+        // Set the origin and destination values in the frontend of our extension
+        document.getElementById("origin").innerText = "TO: ".concat(replaceObliqueWithSpace(origin));
+        document.getElementById("destination").innerText = "FROM: ".concat(replaceObliqueWithSpace(destination));
 
-        // Set these values in the frontend of our extension
-        document.getElementById("to").innerText = "TO: ".concat(replaceObliqueWithSpace(origin));
-        document.getElementById("from").innerText = "FROM: ".concat(replaceObliqueWithSpace(destination));
-
-        // Gotta refactor this request code ...
-        // ... from here ...
-        // driving
-        var requestUri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&mode=" + travelMode + "&key=" + key;
+        // Let's set up our requests
         var request = new XMLHttpRequest();
-        request.open('GET', requestUri, true);
+        var drivingRequestUri = createRequestUri(origin, destination, "driving", key);
+        var transitRequestUri = createRequestUri(origin, destination, "transit", key);
+        // I know this isn't the best way to do it, but here goes
+        var emissionsModifier = 1;
+        var emissionsElement = "carEmissions"
 
-        request.onload = function () {
-            // take the distance
-            var data = JSON.parse(this.response);
-            var distanceM = data.routes[0].legs[0].distance.value;
-            var emissions = distanceM;
-            document.getElementById("carEmissions").setAttribute("name", emissions);
+        request.onload = parseRequestResponse(this, emissionsModifier, emissionsElement);
 
-
-            // transit
-            travelMode = "transit";
-
-            var requestUri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&mode=" + travelMode + "&key=" + key;
-            var request2 = new XMLHttpRequest();
-            request2.open('GET', requestUri, true);
-
-            request2.onload = function () {
-                // take the distance
-                var data = JSON.parse(this.response);
-                var distanceM = data.routes[0].legs[0].distance.value;
-                var emissions = distanceM * 0.6;
-                document.getElementById("busEmissions").setAttribute("name", emissions);
-
-                var carEmissions = parseFloat(document.getElementById("carEmissions").getAttribute("name"));
-                var busEmissions = parseFloat(document.getElementById("busEmissions").getAttribute("name"));
-
-                document.getElementById("difference").setAttribute("name", carEmissions - busEmissions);
-                //document.getElementById("difference").innerText = 23;
-                var differenceEmissions = parseFloat(document.getElementById("difference").getAttribute("name"));
-                document.getElementById("trees").innerText = Math.round(differenceEmissions * 0.000621371 / 48.0*100)/100;
-            }
-            request2.send();
-        }
+        // Mode: driving
+        request.open('GET', drivingRequestUri, true);
         request.send();
-        // ... to here!
+
+        // Mode: transit
+        emissionsModifier = 0.6;
+        emissionsElement = "busEmissions";
+        request.open('GET', transitRequestUri, true);
+        request.send();
+
+        // Get the calculated values for emissions
+        var carEmissions = parseFloat(document.getElementById("carEmissions").getAttribute("name"));
+        var busEmissions = parseFloat(document.getElementById("busEmissions").getAttribute("name"));
+        var differenceInEmissions = carEmissions - busEmissions;
+        var treesSavedModifier = 0.000621371 / 48.0 * 100;
+
+        // Set the difference and trees saved metric values in the frontend of our application
+        document.getElementById("difference").setAttribute("name", differenceInEmissions);
+        document.getElementById("trees").innerText = Math.round(differenceEmissions * treesSavedModifier)/100;
     });
 }
